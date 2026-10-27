@@ -175,7 +175,7 @@ export const AdminDashboard: React.FC<Props> = ({ adminUsername, adminRole = 'SU
 
     let sse: EventSource | null = null;
     try {
-      sse = new EventSource(`${API_BASE}/admin/dashboard/stream`);
+      sse = new EventSource(`${API_BASE}/admin/dashboard/stream`, { withCredentials: true });
       sse.onmessage = () => {
         loadData();
       };
