@@ -17,6 +17,8 @@ export default function handler(req, res) {
 
   const reqUrl = req.url || '';
   const pathAndQuery = reqUrl.startsWith('/') ? reqUrl : '/' + reqUrl;
+  const basePath = (targetParsed.pathname || '').replace(/\/+$/, '');
+  const fullPath = (basePath && basePath !== '/' ? basePath : '') + pathAndQuery;
 
   const transport = targetParsed.protocol === 'https:' ? https : http;
 
@@ -27,7 +29,7 @@ export default function handler(req, res) {
   const options = {
     hostname: targetParsed.hostname,
     port: targetParsed.port || (targetParsed.protocol === 'https:' ? 443 : 80),
-    path: pathAndQuery,
+    path: fullPath,
     method: req.method,
     headers: headers,
   };
